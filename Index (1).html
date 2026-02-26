@@ -1,0 +1,20 @@
+Techora Pro Ecommerce System // fbq('init', 'YOUR_PIXEL_ID'); // fbq('track', 'PageView'); body{margin:0;font-family:Arial;background:#0e0e0e;color:#fff} header{background:#000;padding:15px;text-align:center;color:#d4af37} .container{display:grid;grid-template-columns:260px 1fr;min-height:100vh} .sidebar{background:#000;padding:20px;border-right:1px solid #222} .sidebar button{width:100%;margin:6px 0;padding:10px;border:none;border-radius:8px;background:#d4af37;cursor:pointer;font-weight:bold} .main{padding:20px} .card{background:#111;padding:15px;border-radius:12px;margin-bottom:15px} input,select,textarea{width:100%;padding:10px;margin-top:8px;border:none;border-radius:6px} button.primary{background:#d4af37;border:none;padding:10px 14px;border-radius:8px;margin-top:10px;cursor:pointer;font-weight:bold} .product{display:flex;justify-content:space-between;align-items:center;background:#111;padding:10px;border-radius:10px;margin-top:10px} .small{font-size:12px;color:#aaa} .login{display:flex;align-items:center;justify-content:center;height:100vh} .badge{background:#d4af37;color:#000;padding:3px 8px;border-radius:20px;font-size:12px} 
+Techora Admin Login
+Login 
+Default password: 1234
+Techora Advanced Admin Panel
+Dashboard Add Product Product List Orders Customers Settings 
+Business Overview
+Total Products: 0
+Total Orders: 0
+Total Customers: 0
+Total Revenue: ৳ 0
+Add Product
+ElectronicsIslamicHomeHealth Save Product 
+All Products
+Orders
+bKashNagadBankCash On Delivery Add Order 
+Customer Database
+System Settings
+Update Password 
+let products=JSON.parse(localStorage.getItem('techora_products')||'[]') let orders=JSON.parse(localStorage.getItem('techora_orders')||'[]') let customers=JSON.parse(localStorage.getItem('techora_customers')||'[]') let adminPass=localStorage.getItem('techora_pass')||'1234' function login(){ if(document.getElementById('pass').value===adminPass){ document.getElementById('loginPage').style.display='none' document.getElementById('app').style.display='block' render() }else alert('Wrong Password') } function save(){ localStorage.setItem('techora_products',JSON.stringify(products)) localStorage.setItem('techora_orders',JSON.stringify(orders)) localStorage.setItem('techora_customers',JSON.stringify(customers)) render() } function addProduct(){ let p={ name:pname.value, price:Number(pprice.value), stock:Number(pstock.value), image:pimage.value, category:pcategory.value } products.push(p) save() alert('Product Added') } function deleteProduct(i){products.splice(i,1);save()} function addOrder(){ let o={ customer:orderCustomer.value, phone:orderPhone.value, amount:Number(orderAmount.value), payment:orderPayment.value, status:'Pending' } orders.push(o) customers.push({name:o.customer,phone:o.phone}) save() } function updateStatus(i){orders[i].status='Completed';save()} function changePassword(){ adminPass=newPass.value localStorage.setItem('techora_pass',adminPass) alert('Password Updated') } function render(){ totalProducts.innerText=products.length totalOrders.innerText=orders.length totalCustomers.innerText=customers.length let revenue=0 orders.forEach(o=>revenue+=o.amount) totalRevenue.innerText=revenue let ph='' products.forEach((p,i)=>{ ph+=`<div class='product'>${p.name} | ৳${p.price} | Stock:${p.stock} <button onclick='deleteProduct(${i})'>Delete</button></div>` }) productList.innerHTML=ph let oh='' orders.forEach((o,i)=>{ oh+=`<div class='product'>${o.customer} | ৳${o.amount} | ${o.payment} | <span class='badge'>${o.status}</span> <button onclick='updateStatus(${i})'>Complete</button></div>` }) orderList.innerHTML=oh let ch='' customers.forEach(c=>{ch+=`<div class='product'>${c.name} | ${c.phone}</div>`}) customerList.innerHTML=ch } function show(id){['dashboard','add','list','orders','customers','settings'].forEach(x=>document.getElementById(x).style.display='none');document.getElementById(id).style.display='block'}
